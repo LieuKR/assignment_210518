@@ -4,7 +4,7 @@ block content
   h1= title
   p 댓글 기능 체크용 페이지입니다
 
-  form.form-signin(action="/comments/write" method="POST")
+  form(action="/comments/write" method="POST")
     input(name="comment" type="text" placeholder="댓글 내용" required="" autocomplete="off")
     button(type="submit") 댓글 작성
 
@@ -26,3 +26,7 @@ block content
             td=comments[i].good_num
             td=comments[i].bad_num
     
+  form(action="/comments/update" method="POST")
+    input(name="no" type="number" placeholder="수정할 댓글 번호" required="" autocomplete="off")
+    input(name="comment" type="text" placeholder="수정할 댓글 내용" required="" autocomplete="off")
+    button(type="submit") 댓글 수정
