@@ -17,25 +17,26 @@ router.post('/', function(req, res, next) {
   console.log(req.body.id)
   console.log(req.body.password)
 
+  // 비밀번호는 암호화된 값을 사용
   crypto.pbkdf2(req.body.password, cryptoconfig.salt, cryptoconfig.runnum, cryptoconfig.byte, 
     cryptoconfig.method, (err, derivedKey) => {
-      MySqlHandler.DB.query(`SELECT * FROM users WHERE id='${req.body.id}' and password='${derivedKey.toString('hex')}'`,
+      MySqlHandler.DB.query(`SELECT \`id\` FROM users WHERE id='${req.body.id}' and password='${derivedKey.toString('hex')}'`,
       (err, rows) => {
         if (rows[0] == null) {
-          // 이 경우 아이디, 비밀번호가 잘못되었으므로 그냥 메인화면으로 보냄
+          // 이 경우 아이디, 비밀번호가 잘못되었으므로 그냥 메인페이지로
           console.log('아이디 혹은 비밀번호가 잘못되었습니다');
+          res.redirect('/')
         } else {
-          // 이 경우 jwt를 발급
-          var token = jwt.sign({test : 'test1', testtest : 'testets'}, `${jwtconfig.secret}`);
-          console.log(token)
-          console.log('로그인 되었습니다. jst를 검증합니다.');
-          var decoded_data = jwt.verify(token, `${jwtconfig.secret}`);
-          console.log(decoded_data)
+          // 아이디, 비밀번호가 일치하는 것이 존재할 경우 jwt를 발급
+          var token = jwt.sign({id : rows[0].id}, `${jwtconfig.secret}`);
+          // console.log(token)
+          console.log('로그인 되었습니다.');
+          // var decoded_data = jwt.verify(token, `${jwtconfig.secret}`);
+          // console.log(decoded_data.id)
+          res.redirect('/')
         }
       });
     })
-
-  res.send('respond with a resource');
 });
 
 module.exports = router;
