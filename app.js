@@ -19,6 +19,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 로그인 여부를 판별하기위해 만든 미들웨어
+const jwt = require('jsonwebtoken');
+const jwtconfig  = require('./config/jwt_secret.json');
+
+app.use(function(req, res, next){
+  if(req.cookies.JWT){
+    let decoded_data = jwt.verify(req.cookies.JWT, `${jwtconfig.secret}`);
+    console.log(decoded_data.id)
+  }
+
+  
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 
