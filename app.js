@@ -27,20 +27,22 @@ app.use(function(req, res, next){
   //JMT 쿠키가 클라이언트에게 존재할 경우
   try{
     if(req.cookies.JWT){
-      let decoded_data = jwt.verify(req.cookies.JWT, `${jwtconfig.secret}`); // decode를 해봄
+      let decoded_data = jwt.verify(req.cookies.JWT, `${jwtconfig.secret}`); // JMT decode를 시도
       if(decoded_data){
         res.locals.loginid = decoded_data.id; // res.locals.loginid에 로그인된 아이디를 변수로 할당
-        console.log(res.locals.loginid);
-      } else {
-        res.clearCookie('JWT').send(req.cookies.JWT); // JMT가 잘못되었거나, 기간이 만료되었을 경우 쿠키 삭제
+        next();
+      } else { // 승인되지 않은 JMT일 경우 쿠키를 삭제하고 메인페이지로 리다이렉트
+        res.clearCookie('JWT').send(req.cookies.JWT);
         res.redirect('/')
-      } 
+      }
     }
-  } catch (err) {
-    res.clearCookie('JWT').send(req.cookies.JWT); // JMT가 잘못되었거나, 기간이 만료되었을 경우 쿠키 삭제
+    else { // JMT가 존재하지 않을 경우 통과
+      next();
+    }
+  } catch (err) { // JMT를 decode하는 과정에서 에러가 발생할 경우. 쿠키를 삭제하고 메인페이지로 리다이렉트
+    res.clearCookie('JWT').send(req.cookies.JWT);
     res.redirect('/')
   }
-  next();
 });
 
 app.use('/', indexRouter);
