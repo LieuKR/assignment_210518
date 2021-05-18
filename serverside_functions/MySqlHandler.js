@@ -12,5 +12,6 @@ exports.DB = mysql.createConnection({
       port: DBconfig.port,
       user: DBconfig.user,
       password: DBconfig.password,
-      database: DBconfig.db
+      database: DBconfig.db,
+      multipleStatements: true  // 다중쿼리 설정
 });
