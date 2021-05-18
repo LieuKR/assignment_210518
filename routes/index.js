@@ -10,4 +10,12 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.get('/comments', function(req, res, next) {
+  if(res.locals.loginid){
+    res.render('comments', { title: '댓글' });
+  } else {
+    res.redirect('/')
+  }
+});
+
 module.exports = router;
