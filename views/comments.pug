@@ -7,3 +7,22 @@ block content
   form.form-signin(action="/comments/write" method="POST")
     input(name="comment" type="text" placeholder="댓글 내용" required="" autocomplete="off")
     button(type="submit") 댓글 작성
+
+  -if(comments)
+    table
+      thead
+        tr
+          th 번호
+          th 작성자
+          th 내용
+          th 좋아요
+          th 싫어요
+      tbody
+        -for (let i = 0; i < comments.length; i++)
+          tr
+            td=comments[i].no
+            td=comments[i].writer
+            td=comments[i].contents
+            td=comments[i].good_num
+            td=comments[i].bad_num
+    
