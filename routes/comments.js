@@ -29,6 +29,20 @@ router.post('/update', function(req, res, next) {
       res.redirect('/')
     }
   });
+
+  
+// 댓글 삭제 파트
+router.post('/delete', function(req, res, next) {
+    if(res.locals.loginid){ // 로그인 되어있을 경우
+      MySqlHandler.DB.query(`DELETE FROM \`comments\` WHERE (no = ${req.body.no} and writer = '${res.locals.loginid}')`,
+        (err, rows) => {
+          if(err) {throw err}
+          res.redirect('back');
+        });
+    } else { // 로그인이 안되어있을 경우
+      res.redirect('/')
+    }
+  });
   
 
 module.exports = router;

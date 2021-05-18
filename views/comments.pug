@@ -30,3 +30,7 @@ block content
     input(name="no" type="number" placeholder="수정할 댓글 번호" required="" autocomplete="off")
     input(name="comment" type="text" placeholder="수정할 댓글 내용" required="" autocomplete="off")
     button(type="submit") 댓글 수정
+
+  form(action="/comments/delete" method="POST")
+    input(name="no" type="number" placeholder="삭제할 댓글 번호" required="" autocomplete="off")
+    button(type="submit") 댓글 삭제
