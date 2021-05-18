@@ -3,3 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  form.form-signin(action='/login' method='POST')
+    input(name="id" type='text' placeholder='아이디' required='' autofocus='' autocomplete="off")
+    input(name="pass" type='password' placeholder='비밀번호' required='')
+    button(type="submit") 로그인
