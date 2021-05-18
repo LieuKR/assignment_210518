@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   if(res.locals.loginid){
     res.redirect('/comments')
   } else {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: '메인' });
   }
 });
 
