@@ -13,3 +13,6 @@
 - 좋아요와 싫어요를 독립적으로 구성하는 것이 효율적일듯
 - 좋아요와 싫어요 개수를 댓글DB에 따로 넣고, 유저별 좋아요, 싫어요 여부 테이블을 따로 만들자
 - 일단 나중에생각
+
+4. 댓글 DB : no(INT), writer(varchar(50)), contents(varchar(100)), good_num(INT), bad_num(INT)로 구성.
+- content의 길이가 100을 넘지 않게 제한 걸어줘야함

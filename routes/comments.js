@@ -1,23 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
+// Mysql DB와 관련된 부분 모듈화
+const MySqlHandler = require('../serverside_functions/MySqlHandler.js');  
+
+// 댓글 작성하는 파트
 router.post('/write', function(req, res, next) {
   if(res.locals.loginid){ // 로그인 되어있을 경우
 
+    MySqlHandler.DB.query(`INSERT INTO \`comments\` (writer, contents, good_num, bad_num) VALUES ('${res.locals.loginid}', '${req.body.comment}', 0, 0)`,
+      (err, rows) => {
+        if(err) {throw err}
+        res.redirect('back');
+      });
 
-    
-
-
-
-
-
-
-
-
-
-
-
-    res.redirect('back')
   } else { // 로그인이 안되어있을 경우
     res.redirect('/')
   }
