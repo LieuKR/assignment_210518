@@ -1,10 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/23465comments', function(req, res, next) {
-  if(res.locals.loginid){
-    res.render('comments', { title: '댓글' });
-  } else {
+router.post('/write', function(req, res, next) {
+  if(res.locals.loginid){ // 로그인 되어있을 경우
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    res.redirect('back')
+  } else { // 로그인이 안되어있을 경우
     res.redirect('/')
   }
 });
