@@ -32,11 +32,9 @@ router.post('/', function(req, res, next) {
           console.log('로그인 되었습니다.');
           // 토큰은 JWT라는 이름의 쿠키에 저장, 쿠키의 유효기간을 jwt의 유효기간과 같게 설정
           res.cookie("JWT", token, {
-            //maxAge: jwtconfig.expire
-            maxAge: 50000
+            maxAge: jwtconfig.expire,
+            Httponly: true
           });
-          // var decoded_data = jwt.verify(token, `${jwtconfig.secret}`);
-          // console.log(decoded_data.id)
           res.redirect('/')
         }
       });

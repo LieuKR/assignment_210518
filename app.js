@@ -24,12 +24,22 @@ const jwt = require('jsonwebtoken');
 const jwtconfig  = require('./config/jwt_secret.json');
 
 app.use(function(req, res, next){
-  if(req.cookies.JWT){
-    let decoded_data = jwt.verify(req.cookies.JWT, `${jwtconfig.secret}`);
-    console.log(decoded_data.id)
+  //JMT 쿠키가 클라이언트에게 존재할 경우
+  try{
+    if(req.cookies.JWT){
+      let decoded_data = jwt.verify(req.cookies.JWT, `${jwtconfig.secret}`); // decode를 해봄
+      if(decoded_data){
+        res.locals.loginid = decoded_data.id; // res.locals.loginid에 로그인된 아이디를 변수로 할당
+        console.log(res.locals.loginid);
+      } else {
+        res.clearCookie('JWT').send(req.cookies.JWT); // JMT가 잘못되었거나, 기간이 만료되었을 경우 쿠키 삭제
+        res.redirect('/')
+      } 
+    }
+  } catch (err) {
+    res.clearCookie('JWT').send(req.cookies.JWT); // JMT가 잘못되었거나, 기간이 만료되었을 경우 쿠키 삭제
+    res.redirect('/')
   }
-
-  
   next();
 });
 
