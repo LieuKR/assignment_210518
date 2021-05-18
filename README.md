@@ -15,4 +15,7 @@
 - 일단 나중에생각
 
 4. 댓글 DB : no(INT), writer(varchar(50)), contents(varchar(100)), good_num(INT), bad_num(INT)로 구성.
-- content의 길이가 100을 넘지 않게 제한 걸어줘야함
+- content의 길이가 100을 넘지 않게 제한 걸어줘야함 
+
+5. 좋아요, 싫어요 관리를 위한 table 생성(up_down_check)
+- up_down_check : no(INT), user(좋아요, 싫어요를 한 유저 아이디), target(대상이되는 댓글 번호), value(좋아요 : 1, 싫어요 : 2)
