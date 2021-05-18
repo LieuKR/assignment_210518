@@ -28,9 +28,12 @@ router.post('/', function(req, res, next) {
           res.redirect('/')
         } else {
           // 아이디, 비밀번호가 일치하는 것이 존재할 경우 jwt를 발급
-          var token = jwt.sign({id : rows[0].id}, `${jwtconfig.secret}`);
-          // console.log(token)
+          var token = jwt.sign({id : rows[0].id}, `${jwtconfig.secret}`, {expiresIn: `${jwtconfig.expire}`});
           console.log('로그인 되었습니다.');
+          // 토큰은 JWT라는 이름의 쿠키에 저장, 쿠키의 유효기간을 jwt의 유효기간과 같게 설정
+          res.cookie("JWT", token, {
+            maxAge: jwtconfig.expire
+          });
           // var decoded_data = jwt.verify(token, `${jwtconfig.secret}`);
           // console.log(decoded_data.id)
           res.redirect('/')
