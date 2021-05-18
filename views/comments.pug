@@ -37,8 +37,8 @@ block content
 
   form(action="/comments/add_good" method="POST")
     input(name="no" type="number" placeholder="좋아요 할 번호" required="" autocomplete="off")
-    button(type="submit") 좋아요 / 좋아요가 되어있으면 취소 / 싫어요가 되어있으면 싫어요 취소후 좋아요
+    button(type="submit") 좋아요 / 이미 좋아요 되어있으면 취소 / 싫어요가 되어있으면 싫어요 취소후 좋아요
   
   form(action="/comments/add_bad" method="POST")
     input(name="no" type="number" placeholder="싫어요 할 번호" required="" autocomplete="off")
-    button(type="submit") 싫어요
+    button(type="submit") 싫어요 / 이미 싫어요 되어있으면 취소 / 좋아요가 되어있으면 좋아요 취소후 싫어요
