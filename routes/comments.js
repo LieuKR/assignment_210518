@@ -20,7 +20,7 @@ router.post('/write', function(req, res, next) {
 // 댓글 수정 파트
 router.post('/update', function(req, res, next) {
     if(res.locals.loginid){ // 로그인 되어있을 경우
-      MySqlHandler.DB.query(`INSERT INTO \`comments\` (writer, contents, good_num, bad_num) VALUES ('${res.locals.loginid}', '${req.body.comment}', 0, 0)`,
+      MySqlHandler.DB.query(`UPDATE \`comments\` SET contents = '${req.body.comment}' WHERE (no = ${req.body.no} and writer = '${res.locals.loginid}')`,
         (err, rows) => {
           if(err) {throw err}
           res.redirect('back');
