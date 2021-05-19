@@ -20,3 +20,4 @@
 5. 좋아요, 싫어요 관리를 위한 table 생성(up_down_check)
 - up_down_check : no(INT), user(좋아요, 싫어요를 한 유저 아이디), target(대상이되는 댓글 번호), value(좋아요 : 1, 싫어요 : 2)
 
+6. https://shck1010.gitbook.io/assignment-210518/
