@@ -5,13 +5,13 @@ var router = express.Router();
 const MySqlHandler = require('../serverside_functions/MySqlHandler.js');  
 
 // 금지어와 관련된 부분 모듈화
-const comment = require('../serverside_functions/check_word.js');  
+const comment_test = require('../serverside_functions/check_word.js');  
 
 // 댓글 작성하는 파트
 router.post('/write', function(req, res, next) {
     if(res.locals.loginid){ // 로그인 되어있을 경우
         // 금지어가 입력되었을 경우
-        if(comment.test(req.body.comment) == true) {
+        if(comment_test.testing(req.body.comment)){
             console.log('금지어가 입력되었습니다.')
             res.redirect('back');
         } else { // 금지어가 없는 댓글이 입력되었을 경우
@@ -23,7 +23,7 @@ router.post('/write', function(req, res, next) {
                     while(i < rows.length){
                         // 내 닉네임과 다른 작성자가 하나라도 있을 경우 글작성 가능
                         if(rows[i].writer !== res.locals.loginid){
-                            break
+                            break;
                         } else {
                             i = i + 1;
                         }
@@ -50,7 +50,7 @@ router.post('/write', function(req, res, next) {
 router.post('/update', function(req, res, next) {
     if(res.locals.loginid){ // 로그인 되어있을 경우
         // 수정한 댓글에 금지어가 입력되었을 경우
-        if(comment.test(req.body.comment) == true) {
+        if(comment_test.testing(req.body.comment) == true) {
             console.log('금지어가 입력되었습니다.')
             res.redirect('back');
         } else { // 금지어가 없을 경우
@@ -65,7 +65,6 @@ router.post('/update', function(req, res, next) {
     }
   });
 
-  
 // 댓글 삭제 파트
 router.post('/delete', function(req, res, next) {
     if(res.locals.loginid){ // 로그인 되어있을 경우
