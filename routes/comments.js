@@ -49,11 +49,17 @@ router.post('/write', function(req, res, next) {
 // 댓글 수정 파트
 router.post('/update', function(req, res, next) {
     if(res.locals.loginid){ // 로그인 되어있을 경우
-      MySqlHandler.DB.query(`UPDATE \`comments\` SET contents = '${req.body.comment}' WHERE (no = ${req.body.no} and writer = '${res.locals.loginid}')`,
-        (err, rows) => {
-          if(err) {throw err}
-          res.redirect('back');
-        });
+        // 수정한 댓글에 금지어가 입력되었을 경우
+        if(comment.test(req.body.comment) == true) {
+            console.log('금지어가 입력되었습니다.')
+            res.redirect('back');
+        } else { // 금지어가 없을 경우
+            MySqlHandler.DB.query(`UPDATE \`comments\` SET contents = '${req.body.comment}' WHERE (no = ${req.body.no} and writer = '${res.locals.loginid}')`,
+            (err, rows) => {
+              if(err) {throw err}
+              res.redirect('back');
+            });
+        }
     } else { // 로그인이 안되어있을 경우
       res.redirect('/')
     }
