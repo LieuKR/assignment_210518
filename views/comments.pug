@@ -42,3 +42,6 @@ block content
   form(action="/comments/add_bad" method="POST")
     input(name="no" type="number" placeholder="싫어요 할 번호" required="" autocomplete="off")
     button(type="submit") 싫어요 / 이미 싫어요 되어있으면 취소 / 좋아요가 되어있으면 좋아요 취소후 싫어요
+
+  form(action="/login/logout" method="POST")
+    button(type="submit") 로그아웃

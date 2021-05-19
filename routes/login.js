@@ -39,4 +39,9 @@ router.post('/', function(req, res, next) {
     })
 });
 
+router.post('/logout', function(req, res, next) {
+  res.clearCookie('JWT'); // JMT 쿠키 제거
+  res.redirect('/')
+});
+
 module.exports = router;

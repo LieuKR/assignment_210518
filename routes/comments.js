@@ -28,7 +28,7 @@ router.post('/write', function(req, res, next) {
                             i = i + 1;
                         }
                     }
-                    if(i == rows.length){ // 내 닉네임이 limit_number만큼 연속해서 작성되었었을 경우
+                    if(i == limit_number){ // 내 닉네임이 limit_number만큼 연속해서 작성되었었을 경우
                         console.log(`${limit_number + 1}번 연속으로 댓글을 작성할 수 없습니다.`)
                         res.redirect('back');
                     } else { // 도배가 아닐 경우 댓글 작성

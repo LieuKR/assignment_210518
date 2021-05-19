@@ -33,7 +33,7 @@ app.use(function(req, res, next){
         res.locals.loginid = decoded_data.id; // res.locals.loginid에 로그인된 아이디를 변수로 할당
         next();
       } else { // 승인되지 않은 JMT일 경우 쿠키를 삭제하고 메인페이지로 리다이렉트
-        res.clearCookie('JWT').send(req.cookies.JWT);
+        res.clearCookie('JWT');
         res.redirect('/')
       }
     }
@@ -41,7 +41,7 @@ app.use(function(req, res, next){
       next();
     }
   } catch (err) { // JMT를 decode하는 과정에서 에러가 발생할 경우. 쿠키를 삭제하고 메인페이지로 리다이렉트
-    res.clearCookie('JWT').send(req.cookies.JWT);
+    res.clearCookie('JWT');
     res.redirect('/')
   }
 });
