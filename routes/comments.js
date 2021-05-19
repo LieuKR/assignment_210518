@@ -4,9 +4,14 @@ var router = express.Router();
 // Mysql DB와 관련된 부분 모듈화
 const MySqlHandler = require('../serverside_functions/MySqlHandler.js');  
 
+// 금지어와 관련된 부분 모듈화
+const comment = require('../serverside_functions/check_word.js');  
+
 // 댓글 작성하는 파트
 router.post('/write', function(req, res, next) {
   if(res.locals.loginid){ // 로그인 되어있을 경우
+
+    console.log(comment.test(req.body.comment))
 
     // 도배여부 체크 파트. limit_number만큼 연속해서 같은 닉네임으로 글이 작성되었을 경우 글 작성 차단
     let limit_number = 3;
