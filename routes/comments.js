@@ -9,38 +9,41 @@ const comment = require('../serverside_functions/check_word.js');
 
 // 댓글 작성하는 파트
 router.post('/write', function(req, res, next) {
-  if(res.locals.loginid){ // 로그인 되어있을 경우
-
-    console.log(comment.test(req.body.comment))
-
-    // 도배여부 체크 파트. limit_number만큼 연속해서 같은 닉네임으로 글이 작성되었을 경우 글 작성 차단
-    let limit_number = 3;
-    MySqlHandler.DB.query(`SELECT writer FROM \`comments\` ORDER BY \`no\` DESC limit ${limit_number}`,
-        (err, rows) => {
-            let i = 0;
-            while(i < rows.length){
-                // 내 닉네임과 다른 작성자가 하나라도 있을 경우 글작성 가능
-                if(rows[i].writer !== res.locals.loginid){
-                    break
-                } else {
-                    i = i + 1;
-                }
-            }
-            if(i == rows.length){ // 내 닉네임이 limit_number만큼 연속해서 작성되었었을 경우
-                console.log(`${limit_number + 1}번 연속으로 댓글을 작성할 수 없습니다.`)
-                res.redirect('back');
-            } else { // 도배가 아닐 경우 댓글 작성
-                // 이하는 댓글 작성 로직
-                MySqlHandler.DB.query(`INSERT INTO \`comments\` (writer, contents, good_num, bad_num) VALUES ('${res.locals.loginid}', '${req.body.comment}', 0, 0)`,
+    if(res.locals.loginid){ // 로그인 되어있을 경우
+        // 금지어가 입력되었을 경우
+        if(comment.test(req.body.comment) == true) {
+            console.log('금지어가 입력되었습니다.')
+            res.redirect('back');
+        } else { // 금지어가 없는 댓글이 입력되었을 경우
+            // 도배여부 체크 파트. limit_number만큼 연속해서 같은 닉네임으로 글이 작성되었을 경우 글 작성 차단
+            let limit_number = 3;
+            MySqlHandler.DB.query(`SELECT writer FROM \`comments\` ORDER BY \`no\` DESC limit ${limit_number}`,
                 (err, rows) => {
-                  if(err) {throw err}
-                  res.redirect('back');
+                    let i = 0;
+                    while(i < rows.length){
+                        // 내 닉네임과 다른 작성자가 하나라도 있을 경우 글작성 가능
+                        if(rows[i].writer !== res.locals.loginid){
+                            break
+                        } else {
+                            i = i + 1;
+                        }
+                    }
+                    if(i == rows.length){ // 내 닉네임이 limit_number만큼 연속해서 작성되었었을 경우
+                        console.log(`${limit_number + 1}번 연속으로 댓글을 작성할 수 없습니다.`)
+                        res.redirect('back');
+                    } else { // 도배가 아닐 경우 댓글 작성
+                        // 이하는 댓글 작성 로직
+                        MySqlHandler.DB.query(`INSERT INTO \`comments\` (writer, contents, good_num, bad_num) VALUES ('${res.locals.loginid}', '${req.body.comment}', 0, 0)`,
+                        (err, rows) => {
+                        if(err) {throw err}
+                        res.redirect('back');
+                        });
+                    }
                 });
             }
-        });
-  } else { // 로그인이 안되어있을 경우
-    res.redirect('/')
-  }
+    } else { // 로그인이 안되어있을 경우
+        res.redirect('/')
+    }
 });
 
 // 댓글 수정 파트
