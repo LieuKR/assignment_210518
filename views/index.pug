@@ -7,7 +7,7 @@ block content
   p 회원가입, 로그아웃등의 기능은 구현되지 않았습니다 
   p 로그아웃은 JMT 쿠키를 제거하는 것으로 로그아웃이 가능합니다.
 
-  form(action="/login" method="POST")
+  form(action="/users/login" method="POST")
     input(name="id" type="text" placeholder="아이디" required="" autofocus="" autocomplete="off")
     input(name="password" type="password" placeholder="비밀번호" required="")
     button(type="submit") 로그인

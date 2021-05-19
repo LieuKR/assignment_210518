@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken');
 const jwtconfig  = require('../config/jwt_secret.json');
 
 /* GET users listing. */
-router.post('/', function(req, res, next) {
+router.post('/login', function(req, res, next) {
   // 비밀번호는 암호화된 값을 사용
   crypto.pbkdf2(req.body.password, cryptoconfig.salt, cryptoconfig.runnum, cryptoconfig.byte, 
     cryptoconfig.method, (err, derivedKey) => {
